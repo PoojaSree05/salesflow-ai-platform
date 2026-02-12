@@ -30,12 +30,12 @@ export const kpiData = [
 ];
 
 export const funnelData = [
-  { stage: "Sent", value: 12847, fill: "hsl(245, 58%, 51%)" },
-  { stage: "Opened", value: 8787, fill: "hsl(245, 58%, 58%)" },
-  { stage: "Replied", value: 1432, fill: "hsl(245, 58%, 65%)" },
-  { stage: "Positive", value: 487, fill: "hsl(152, 60%, 42%)" },
-  { stage: "Calls", value: 156, fill: "hsl(38, 92%, 50%)" },
-  { stage: "Meetings", value: 89, fill: "hsl(205, 85%, 50%)" },
+  { stage: "Sent", value: 12847, fill: "hsl(var(--primary-dark))" },
+  { stage: "Opened", value: 8787, fill: "hsl(var(--primary))" },
+  { stage: "Replied", value: 1432, fill: "hsl(var(--primary-light))" },
+  { stage: "Positive", value: 487, fill: "hsl(var(--success))" },
+  { stage: "Calls", value: 156, fill: "hsl(var(--warning))" },
+  { stage: "Meetings", value: 89, fill: "hsl(var(--info))" },
 ];
 
 export const abTestData = [

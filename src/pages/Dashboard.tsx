@@ -119,8 +119,8 @@ const Dashboard = () => {
                 <YAxis fontSize={12} />
                 <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 12 }} />
                 <Legend wrapperStyle={{ fontSize: 12 }} />
-                <Bar dataKey="campaignA" name="Campaign A" fill="hsl(245, 58%, 51%)" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="campaignB" name="Campaign B" fill="hsl(205, 85%, 50%)" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="campaignA" name="Campaign A" fill={"hsl(var(--primary-dark))"} radius={[4, 4, 0, 0]} />
+                <Bar dataKey="campaignB" name="Campaign B" fill={"hsl(var(--primary-light))"} radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>

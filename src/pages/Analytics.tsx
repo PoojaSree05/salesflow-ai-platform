@@ -5,7 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { funnelData, channelPerformance, revenueData, abTestData, auditLog, simulateDelay } from "@/lib/mock-data";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend, AreaChart, Area } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend, AreaChart, Area, Cell, LabelList } from "recharts";
 
 const Analytics = () => {
   const [loading, setLoading] = useState(true);
@@ -30,11 +30,16 @@ const Analytics = () => {
           <CardContent>
             <ResponsiveContainer width="100%" height={250}>
               <BarChart data={funnelData} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border) / 0.9)" />
                 <XAxis type="number" fontSize={11} />
                 <YAxis dataKey="stage" type="category" fontSize={11} width={60} />
-                <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 12 }} />
-                <Bar dataKey="value" fill="hsl(245, 58%, 51%)" radius={[0, 4, 4, 0]} />
+                <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 12 }} formatter={(v:number)=>v.toLocaleString()} />
+                <Bar dataKey="value" radius={[0, 6, 6, 0]} barSize={18} animationDuration={900} animationEasing="ease-out">
+                  {funnelData.map((entry, idx) => (
+                    <Cell key={`cell-${idx}`} fill={entry.fill} />
+                  ))}
+                  <LabelList dataKey="value" position="right" formatter={(v: number) => v.toLocaleString()} />
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -46,11 +51,18 @@ const Analytics = () => {
           <CardContent>
             <ResponsiveContainer width="100%" height={250}>
               <AreaChart data={revenueData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <defs>
+                  <linearGradient id="primaryArea" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.22" />
+                    <stop offset="60%" stopColor="hsl(var(--primary))" stopOpacity="0.08" />
+                    <stop offset="100%" stopColor="hsl(var(--primary-light))" stopOpacity="0.02" />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border) / 0.9)" />
                 <XAxis dataKey="month" fontSize={11} />
                 <YAxis fontSize={11} tickFormatter={v => `$${v / 1000}K`} />
                 <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 12 }} formatter={(v: number) => [`$${(v / 1000).toFixed(0)}K`, "Pipeline"]} />
-                <Area type="monotone" dataKey="value" stroke="hsl(245, 58%, 51%)" fill="hsl(245, 58%, 51%)" fillOpacity={0.15} strokeWidth={2} />
+                <Area type="monotone" dataKey="value" stroke={"hsl(var(--primary-dark))"} fill="url(#primaryArea)" fillOpacity={1} strokeWidth={2} animationDuration={1100} />
               </AreaChart>
             </ResponsiveContainer>
           </CardContent>
@@ -106,8 +118,8 @@ const Analytics = () => {
                 <YAxis fontSize={11} />
                 <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 12 }} />
                 <Legend wrapperStyle={{ fontSize: 11 }} />
-                <Line type="monotone" dataKey="campaignA" name="Sequence A" stroke="hsl(245, 58%, 51%)" strokeWidth={2} dot={{ r: 3 }} />
-                <Line type="monotone" dataKey="campaignB" name="Sequence B" stroke="hsl(205, 85%, 50%)" strokeWidth={2} dot={{ r: 3 }} />
+                <Line type="monotone" dataKey="campaignA" name="Sequence A" stroke={"hsl(var(--primary-dark))"} strokeWidth={2} dot={false} activeDot={{ r: 5 }} strokeLinecap="round" animationDuration={900} />
+                <Line type="monotone" dataKey="campaignB" name="Sequence B" stroke={"hsl(var(--primary-light))"} strokeWidth={2} dot={false} activeDot={{ r: 5 }} strokeLinecap="round" animationDuration={900} />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
